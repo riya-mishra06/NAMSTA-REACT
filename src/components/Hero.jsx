@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import Shimmer from './Shimmer';
+import { Link } from "react-router-dom"; // ✅ Import Link
+
+
+
+
 
 const Hero = () => {
   const [search, setSearch] = useState('');
@@ -67,20 +72,25 @@ const Hero = () => {
       </div>
 
       {/* Restaurant Cards */}
-      <div className="flex flex-wrap justify-center gap-6 p-4">
-        {restaurants.map((item, index) => (
-          <Card
-            key={index}
-            img={
-              item.imageUrl ||
-              "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=880"
-            }
-            name={item.restaurantName || 'Unnamed Restaurant'}
-            cusines={item.type || 'N/A'}
-            rating={item.rating != null ? item.rating.toString() : 'N/A'}
-          />
-        ))}
-      </div>
+    <div className="flex flex-wrap justify-center gap-6 p-4">
+  {restaurants.map((item) => (
+    <Link
+      key={item.restaurantID}
+      to={`/restaurant/${item.restaurantID}`} // ✅ Navigate to RestaurantMenu
+      className="transition-transform hover:scale-105"
+    >
+      <Card
+        img={
+          item.imageUrl ||
+          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=880"
+        }
+        name={item.restaurantName || "Unnamed Restaurant"}
+        cusines={item.type || "N/A"}
+        rating={item.rating != null ? item.rating.toString() : "N/A"}
+      />
+    </Link>
+  ))}
+</div>
     </>
   );
 };
