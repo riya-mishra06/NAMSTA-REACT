@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import Shimmer from './Shimmer';
 import { Link } from "react-router-dom"; // ✅ Import Link
-
-
-
-
+import useOnline  from '../utils/useOnline'
 
 const Hero = () => {
   const [search, setSearch] = useState('');
@@ -38,6 +35,12 @@ const Hero = () => {
         .includes(searchText.toLowerCase())
     );
   }
+
+ const isOnline = useOnline(); 
+ if(!isOnline){
+  return <h1>❤️Offline please check your internet</h1>
+
+ } 
 
   // ✅ Show shimmer while loading
   if (isLoading) return <Shimmer />;
