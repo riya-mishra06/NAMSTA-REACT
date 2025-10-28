@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../utils/useContext"
+import  {useSelector }  from "react-redux";
+
 
 const Header = () => {
+  const { user } = useContext(UserContext);
+  const cartItems = useSelector(store =>store.cart.items )
+
+
   return (
     <header className="h-20 w-full flex justify-between items-center bg-gray-100 shadow-md shadow-gray-400 px-6">
       <div className="h-full w-24">
@@ -11,7 +19,6 @@ const Header = () => {
           alt="logo"
         />
       </div>
-
       <nav className="flex justify-between items-center gap-6">
         <Link to="/" className="text-lg font-medium hover:text-blue-500 transition">
           Home
@@ -19,17 +26,21 @@ const Header = () => {
         <Link to="/about" className="text-lg font-medium hover:text-blue-500 transition">
           About
         </Link>
-        <Link to="/cart" className="text-lg font-medium hover:text-blue-500 transition">
-          Cart
-        </Link>
+       
         <Link to="/contact" className="text-lg font-medium hover:text-blue-500 transition">
           Contact
         </Link>
         <Link to="/instamart" className="text-lg font-medium hover:text-blue-500 transition">
-            Instamart 
+          Instamart
         </Link>
-        
+        <Link to="/cart" className="text-lg font-medium hover:text-blue-500 transition">
+  Cart-{cartItems.length} items
+</Link>
+
+
+
       </nav>
+      {user.name}
     </header>
   );
 };

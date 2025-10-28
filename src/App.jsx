@@ -8,17 +8,25 @@ import Contacts from './components/Contacts'
 import { Routes, Route } from 'react-router-dom'
 import RestaurantMenu from './components/RestaurantMenu'
 import Profile from './components/Profile'
-// import Instamart from './components/instamart'
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import Shimmer from "./components/Shimmer"
+import UserContext from './utils/useContext'
+import {Provider} from 'react-redux';
+import store from './utils/store'
 
-const Instamart = lazy(() =>
-  import("./components/instamart")
-)
+const Instamart = lazy(() => import("./components/Instamart")) 
 
 const App = () => {
+   const [user,setUser] = useState({
+    name:"Riya Mishra",
+    email:"mriya0619@gmail.com"
+   });
+
+
   return (
-    <>
+    <Provider store={store}>
+    <UserContext.Provider
+     value={{user:user}}>
       <Header />
       <Routes>
         <Route path="/" element={<Hero />} />
@@ -27,16 +35,24 @@ const App = () => {
         </Route>
         <Route path="/cart" element={<Cart />} />
         <Route path="/contact" element={<Contacts />} />
-        <Route path="*" element={<ErrorPage />} />
         <Route path="/restaurant/:id" element={<RestaurantMenu />} />
-        <Route path="/instamart" 
-        element={<Suspense fallback={<Shimmer />}>
-          <Instamart /></Suspense>} />
+        
+        {/* ✅ Lazy-loaded route wrapped properly in Suspense */}
+        <Route
+          path="/instamart"
+          element={
+            <Suspense fallback={<Shimmer />}>
+              <Instamart />
+            </Suspense>
+          }
+        />
+
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Footer />
-    </>
+   </UserContext.Provider>
+   </Provider>
   )
 }
 
 export default App
-//useParams==> hooks
