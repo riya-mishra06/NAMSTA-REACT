@@ -28,6 +28,7 @@ const Header = () => {
         <Link to="/instamart" className="text-lg font-medium hover:text-blue-500 transition">
             Instamart 
         </Link>
+        
       </nav>
     </header>
   );
